@@ -7,19 +7,19 @@
 - [x] Set up basic folder structure (`src/pages`, `src/components`, `src/layouts`)
 
 ## 2. Core Layout & Routing
-- [ ] Create main layout (responsive, mobile-first)
+- - [x] Create main layout (responsive, mobile-first)
 - [x] Create Landing Page (`/`) with a Hero section and a clear "Start Quiz" CTA
-- [ ] Create Quiz Page UI (`/quiz`)
-- [ ] Create Results Page UI (`/results`)
+- - [x] Create Quiz Page UI (`/quiz`)
+- - [x] Create Results Page UI (`/results`)
 
 ## 3. Quiz Gameplay Logic
-- [ ] Define Quiz data structure (Question text, image, 3 possible answers, correct answer index)
+- - [x] Define Quiz data structure (Question text, image, 3 possible answers, correct answer index)
 - [ ] Create a "Question" component to display one question at a time
-- [ ] Implement state management to track:
+- - [x] Implement state management to track:
     - Current question index (0 to 9)
     - User's score
     - Answered questions
-- [ ] Add logic for "Next Question" and final quiz completion
+- - [x] Add logic for "Next Question" and final quiz completion
 
 ## 4. UI/UX & Aesthetics
 - [ ] Implement mobile-optimized layout (touch-friendly buttons)
