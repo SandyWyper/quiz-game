@@ -1,17 +1,33 @@
 ---
-
+import '../styles/global.css';
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Quiz Game</title>
 	</head>
-	<body>
-		<h1>Astro</h1>
+	<body class="bg-base-200 min-h-screen flex flex-col items-center justify-center p-4">
+		<div class="card w-full max-w-md bg-base-100 shadow-xl">
+			<figure class="px-10 pt-10">
+				<div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-primary-content text-4xl font-bold">
+					?
+				</div>
+			</figure>
+			<div class="card-body items-center text-center">
+				<h2 class="card-title text-3xl font-bold mb-2">Quiz Master!</h2>
+				<p class="text-base-content/70">Test your knowledge in this fast-paced 10-question quiz. Are you ready?</p>
+				<div class="card-actions mt-6">
+					<a href="/quiz" class="btn btn-primary btn-lg px-8">Start Quiz</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-8 opacity-50 text-sm">
+			[Placeholder for Google Ads]
+		</div>
 	</body>
 </html>
