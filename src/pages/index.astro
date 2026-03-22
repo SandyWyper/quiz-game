@@ -1,33 +1,32 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Quiz Game</title>
-	</head>
-	<body class="bg-base-200 min-h-screen flex flex-col items-center justify-center p-4">
-		<div class="card w-full max-w-md bg-base-100 shadow-xl">
-			<figure class="px-10 pt-10">
-				<div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-primary-content text-4xl font-bold">
-					?
+<Layout title="Quiz Master - Welcome">
+	<div class="card w-full max-w-md bg-base-100 shadow-xl border border-base-300">
+		<figure class="px-10 pt-10">
+			<div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-primary-content text-4xl font-bold shadow-lg">
+				?
+			</div>
+		</figure>
+		<div class="card-body items-center text-center py-8">
+			<h2 class="card-title text-3xl font-black mb-2">Quiz Master!</h2>
+			<p class="text-base-content/70 text-lg">Test your knowledge with 10 exciting questions. Can you get a perfect score?</p>
+			
+			<div class="stats shadow bg-base-200 w-full my-6">
+				<div class="stat place-items-center p-4">
+					<div class="stat-title text-xs uppercase font-bold">Questions</div>
+					<div class="stat-value text-2xl">10</div>
 				</div>
-			</figure>
-			<div class="card-body items-center text-center">
-				<h2 class="card-title text-3xl font-bold mb-2">Quiz Master!</h2>
-				<p class="text-base-content/70">Test your knowledge in this fast-paced 10-question quiz. Are you ready?</p>
-				<div class="card-actions mt-6">
-					<a href="/quiz" class="btn btn-primary btn-lg px-8">Start Quiz</a>
+				<div class="stat place-items-center p-4">
+					<div class="stat-title text-xs uppercase font-bold">Difficulty</div>
+					<div class="stat-value text-2xl text-secondary">Medium</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="mt-8 opacity-50 text-sm">
-			[Placeholder for Google Ads]
+			<div class="card-actions w-full">
+				<a href="/quiz" class="btn btn-primary btn-lg w-full font-bold shadow-lg">Start Quiz</a>
+			</div>
 		</div>
-	</body>
-</html>
+	</div>
+</Layout>

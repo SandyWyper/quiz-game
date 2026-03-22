@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { quizQuestions } from '../data/quiz';
+---
+
+<Layout title="Quiz - Question 1">
+  <div id="quiz-container" class="w-full">
+    <!-- Progress Bar -->
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-medium" id="progress-text">Question 1 of 10</span>
+        <span class="text-sm font-medium" id="score-text">Score: 0</span>
+      </div>
+      <progress id="quiz-progress" class="progress progress-primary w-full" value="10" max="100"></progress>
+    </div>
+
+    <!-- Question Card -->
+    <div class="card bg-base-100 shadow-xl overflow-hidden border border-base-300">
+      <figure id="question-image-container" class="h-48 sm:h-64 bg-base-300">
+        <img id="question-image" src={quizQuestions[0].image} alt="Question" class="w-full h-full object-cover" />
+      </figure>
+      
+      <div class="card-body p-6 sm:p-8">
+        <h2 id="question-text" class="card-title text-xl sm:text-2xl mb-6">
+          {quizQuestions[0].text}
+        </h2>
+        
+        <div id="options-container" class="grid gap-3">
+          {quizQuestions[0].options.map((option, index) => (
+            <button 
+              class="btn btn-outline btn-primary btn-lg justify-start h-auto py-4 text-left font-semibold no-animation option-btn"
+              data-index={index}
+            >
+              <span class="badge badge-primary mr-2">{String.fromCharCode(65 + index)}</span>
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Next Button (Hidden initially) -->
+    <div class="mt-8 flex justify-center hidden" id="next-container">
+      <button id="next-btn" class="btn btn-secondary btn-wide">Next Question</button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { quizQuestions } from '../data/quiz';
+
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let answered = false;
+
+  const container = document.getElementById('quiz-container');
+  const questionText = document.getElementById('question-text');
+  const questionImage = document.getElementById('question-image');
+  const optionsContainer = document.getElementById('options-container');
+  const progressText = document.getElementById('progress-text');
+  const scoreText = document.getElementById('score-text');
+  const progressValue = document.getElementById('quiz-progress') as HTMLProgressElement;
+  const nextContainer = document.getElementById('next-container');
+  const nextBtn = document.getElementById('next-btn');
+
+  function initOptions() {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => handleAnswer(parseInt(btn.getAttribute('data-index')!)));
+    });
+  }
+
+  function handleAnswer(index: number) {
+    if (answered) return;
+    answered = true;
+
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    const buttons = document.querySelectorAll('.option-btn');
+    
+    if (index === currentQuestion.correctAnswer) {
+      score++;
+      buttons[index].classList.remove('btn-outline');
+      buttons[index].classList.add('btn-success', 'text-white');
+    } else {
+      buttons[index].classList.remove('btn-outline');
+      buttons[index].classList.add('btn-error', 'text-white');
+      // Show correct answer
+      buttons[currentQuestion.correctAnswer].classList.remove('btn-outline');
+      buttons[currentQuestion.correctAnswer].classList.add('btn-success', 'text-white');
+    }
+
+    scoreText!.innerText = `Score: ${score}`;
+    nextContainer!.classList.remove('hidden');
+    
+    if (currentQuestionIndex === quizQuestions.length - 1) {
+      nextBtn!.innerText = "See Results";
+    }
+  }
+
+  function nextQuestion() {
+    currentQuestionIndex++;
+    
+    if (currentQuestionIndex >= quizQuestions.length) {
+      localStorage.setItem('quiz-score', score.toString());
+      window.location.href = '/results';
+      return;
+    }
+
+    const nextQ = quizQuestions[currentQuestionIndex];
+    answered = false;
+    
+    // Update UI
+    questionText!.innerText = nextQ.text;
+    (questionImage as HTMLImageElement).src = nextQ.image;
+    progressText!.innerText = `Question ${currentQuestionIndex + 1} of 10`;
+    progressValue!.value = (currentQuestionIndex + 1) * 10;
+    nextContainer!.classList.add('hidden');
+
+    // Re-render options
+    optionsContainer!.innerHTML = nextQ.options.map((option, index) => `
+      <button 
+        class="btn btn-outline btn-primary btn-lg justify-start h-auto py-4 text-left font-semibold no-animation option-btn"
+        data-index="${index}"
+      >
+        <span class="badge badge-primary mr-2">${String.fromCharCode(65 + index)}</span>
+        ${option}
+      </button>
+    `).join('');
+
+    initOptions();
+  }
+
+  nextBtn!.addEventListener('click', nextQuestion);
+  initOptions();
+</script>
